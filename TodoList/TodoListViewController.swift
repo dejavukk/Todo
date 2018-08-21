@@ -62,7 +62,7 @@ class TodoListViewController: UITableViewController {
             
             self.tableView.reloadData()
             
-            //print("Success!")
+            
             
         }
         alert.addTextField { (alertTextField) in
