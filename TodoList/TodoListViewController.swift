@@ -10,7 +10,7 @@ import UIKit
 
 class TodoListViewController: UITableViewController {
     
-    let itemArray = ["App Development", "learning English", "Diet",
+    var itemArray = ["App Development", "learning English", "Diet",
                      "Reading a Book.", "Play the Basketball"]
     
     override func viewDidLoad() {
@@ -44,22 +44,38 @@ class TodoListViewController: UITableViewController {
             tableView.cellForRow(at: indexPath)?.accessoryType = .none
         } else {
             tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-
         }
         
         tableView.deselectRow(at: indexPath, animated: true)
-        
-        
-        
-        
     }
     
-    
-    
-    
-    
-    
-    
-
+    // * 리스트의 새로운 일정 추가하기구현
+    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        
+        var textField = UITextField()
+        
+        let alert = UIAlertController(title: "새로운 일정추가", message: "", preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "추가", style: .default) { (action) in
+            
+            self.itemArray.append(textField.text!)
+            
+            self.tableView.reloadData()
+            
+            //print("Success!")
+            
+        }
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder = "입력하세요!"
+            textField = alertTextField
+            
+            //print(alertTextField.text)
+        }
+        
+        alert.addAction(action)
+        
+        present(alert, animated: true, completion: nil)
+        
+    }
 }
 
