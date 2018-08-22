@@ -13,9 +13,7 @@ class TodoListViewController: UITableViewController {
     var itemArray = ["App Development", "learning English", "Diet",
                      "Reading a Book.", "Play the Basketball"]
     
-
     let defaults = UserDefaults.standard
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +44,7 @@ class TodoListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        //print(itemArray[indexPath.row])
+        
         
         // 리스트의 선택 및 해제 구현부분
         if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
