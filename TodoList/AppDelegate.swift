@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import CoreData
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,6 +15,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        
+        //RealmData 찾기 위한 console문.
+        //print(Realm.Configuration.defaultConfiguration.fileURL)
+        
+        do {
+            _ = try Realm()
+        } catch {
+            print("Error initialising new realm, \(error)")
+        }
         
         return true
         
@@ -37,14 +47,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         
     }
-    */
+ 
+    
     func applicationWillTerminate(_ application: UIApplication) {
-        
+
         self.saveContext()
     }
-    
+    */
     // MARK: - Core Data stack
-    
+    /*
     lazy var persistentContainer: NSPersistentContainer = {
         
         let container = NSPersistentContainer(name: "DataModel")
@@ -70,5 +81,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
+ */
 }
 
