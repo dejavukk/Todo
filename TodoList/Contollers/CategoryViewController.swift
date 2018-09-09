@@ -8,8 +8,9 @@
 
 import UIKit
 import RealmSwift
+import ChameleonFramework
 
-class CategoryViewController: UITableViewController {
+class CategoryViewController: SwipeTableViewController {
     
     let realm = try! Realm()
     var categories: Results<Category>?
@@ -18,6 +19,9 @@ class CategoryViewController: UITableViewController {
         super.viewDidLoad()
         
         loadCategories()
+        
+        tableView.separatorStyle = .none
+        tableView.rowHeight = 80.0
    
     }
 
@@ -27,6 +31,7 @@ class CategoryViewController: UITableViewController {
     }
     
     // * TableView Datasource Methods.
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return categories?.count ?? 1
@@ -35,8 +40,18 @@ class CategoryViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
-        cell.textLabel?.text = categories?[indexPath.row].name ?? "No Categories Added yet."
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
+        
+        if let category = categories?[indexPath.row] {
+            
+            cell.textLabel?.text = category.name
+            
+            guard let categoryColor = UIColor(hexString: category.color) else {fatalError()}
+            
+            cell.backgroundColor = categoryColor
+            
+            cell.textLabel?.textColor = ContrastColorOf(categoryColor, returnFlat: true)
+        }
         
         return cell
         
@@ -70,16 +85,31 @@ class CategoryViewController: UITableViewController {
         } catch {
             print("Error saving category. \(error)")
         }
-        
         tableView.reloadData()
+        
     }
     
     func loadCategories() {
         
         categories = realm.objects(Category.self)
-        
         tableView.reloadData()
         
+    }
+    
+    // * 스와이프를 이용하여 데이터 및 카테고리 삭제
+    override func updateModel(at indexPath: IndexPath) {
+        
+        // super.updateModel(at: indexPath)
+        
+        if let categoryForDeletion = self.categories?[indexPath.row] {
+            do {
+                try self.realm.write {
+                    self.realm.delete(categoryForDeletion)
+                }
+            } catch {
+                print("Error deleting Categories. \(error)")
+            }
+        }
     }
     
     // * 새로운 카테고리 추가 메소드 구현.
@@ -88,11 +118,11 @@ class CategoryViewController: UITableViewController {
         var textField = UITextField()
         
         let alert = UIAlertController(title: "새로운 목록 추가", message: "", preferredStyle: .alert)
-        
         let action = UIAlertAction(title: "추가", style: .default) { (action) in
             
             let newCategory = Category()
             newCategory.name = textField.text!
+            newCategory.color = UIColor.randomFlat.hexValue()
             
             self.save(category: newCategory)
             
