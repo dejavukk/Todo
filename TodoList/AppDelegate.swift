@@ -54,7 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.saveContext()
     }
     */
-    // MARK: - Core Data stack
+    // MARK: - Core Data stack -> CoreData를 활용하여 DB를 구현해보았습니다.
     /*
     lazy var persistentContainer: NSPersistentContainer = {
         
