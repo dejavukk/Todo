@@ -25,7 +25,6 @@ class SwipeTableViewController: UITableViewController, SwipeTableViewCellDelegat
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! SwipeTableViewCell
-        
         cell.delegate = self
         
         return cell
@@ -35,16 +34,14 @@ class SwipeTableViewController: UITableViewController, SwipeTableViewCellDelegat
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
         
         guard orientation == .right else { return nil }
-        
         let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
             
-            self.updateModel(at: indexPath)
+        self.updateModel(at: indexPath)
 
-        }
+    }
         
         // customize the action appearance (스와이프 할 때 삭제 아이콘 설정.)
         deleteAction.image = UIImage(named: "delete-icon")
-        
         return [deleteAction]
     }
     
@@ -53,6 +50,7 @@ class SwipeTableViewController: UITableViewController, SwipeTableViewCellDelegat
         options.expansionStyle = .destructive
         // options.transitionStyle = .border
         return options
+        
     }
     
     func updateModel(at indexPath: IndexPath) {

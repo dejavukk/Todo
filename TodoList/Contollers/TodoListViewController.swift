@@ -40,7 +40,6 @@ class TodoListViewController: SwipeTableViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        
         // guard let originalColor = UIColor(hexString: "1D9BF6") else {fatalError()}
         updateNavBar(withHexCode: "1D9BF6")
         
@@ -48,8 +47,6 @@ class TodoListViewController: SwipeTableViewController {
     
     // * 네이게이션바 설정 Methods.
     func updateNavBar(withHexCode colorHexCode: String) {
-        
-        
         
         guard let navBar = navigationController?.navigationBar else {fatalError("NavigationController does not exist.")}
 
@@ -59,13 +56,11 @@ class TodoListViewController: SwipeTableViewController {
         
         navBar.tintColor = ContrastColorOf(navBarColor, returnFlat: true)
         
-        navBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor : ContrastColorOf(navBarColor, returnFlat: true)]
+        navBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : ContrastColorOf(navBarColor, returnFlat: true)]
         
         searchBar.barTintColor = navBarColor
         
     }
-    
-
     
     // * TableView DataSource Methods.
     
@@ -88,7 +83,6 @@ class TodoListViewController: SwipeTableViewController {
                 cell.textLabel?.textColor = ContrastColorOf(color, returnFlat: true)
             
             }
-            
             //print("version 1: \(CGFloat(indexPath.row / todoItems!.count))")
             //print("version 2: \(CGFloat(indexPath.row) / CGFloat(todoItems!.count)))")
             
@@ -135,9 +129,7 @@ class TodoListViewController: SwipeTableViewController {
                     try self.realm.write {
                         let newItem = Item()
                         newItem.title = textField.text!
-                        
                         newItem.dateCreated = Date()
-                        
                         currentCategory.items.append(newItem)
                     }
                 } catch {
@@ -155,7 +147,6 @@ class TodoListViewController: SwipeTableViewController {
         }
         
         alert.addAction(action)
-        
         present(alert, animated: true, completion: nil)
         
     }
@@ -164,7 +155,6 @@ class TodoListViewController: SwipeTableViewController {
     func loadItems() {
         
         todoItems = selectedCategory?.items.sorted(byKeyPath: "title", ascending: true)
-        
         tableView.reloadData()
     }
     
