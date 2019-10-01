@@ -122,7 +122,7 @@ class CategoryViewController: SwipeTableViewController {
             
             let newCategory = Category()
             newCategory.name = textField.text!
-            newCategory.color = UIColor.randomFlat.hexValue()
+            newCategory.color = UIColor.randomFlat().hexValue()
             
             self.save(category: newCategory)
             
